@@ -1,0 +1,230 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Info_Register_Activity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/switch_face_rl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp" >
+
+            <ImageView
+            android:id="@+id/face"
+            android:layout_width="85dip"
+            android:layout_height="85dip"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/default_avatar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_toRightOf="@id/face"
+            android:layout_gravity="center"
+            android:text="设置头像"
+            android:textSize="16dp"
+            android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="right" >
+
+            <TextView
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="21dp"
+                android:fontFamily="黑体"
+                android:text="保存"
+                android:textColor="#CC24B2E5"
+                android:textSize="17dp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8" 
+        android:orientation="vertical">
+        <LinearLayout 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1">"
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名:"
+            android:textSize="16dp"
+            android:fontFamily="宋体"/>
+
+        <EditText
+            android:id="@+id/nameEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:hint="点击填写姓名"
+            android:textSize="16dp"
+            android:fontFamily="宋体" />
+
+</LinearLayout>
+<LinearLayout 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性别:"
+            android:textSize="16dp"
+            android:fontFamily="宋体"/>
+
+        <EditText
+            android:id="@+id/sexEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:background="#00000000"
+            android:hint="点击填写性別"
+            android:textSize="16dp"
+            android:fontFamily="宋体" />
+
+</LinearLayout>
+<LinearLayout 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="年龄:"
+            android:textSize="16dp"
+            android:fontFamily="宋体"/>
+
+        <EditText
+            android:id="@+id/ageEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:background="#00000000"
+            android:hint="点击填写年龄"
+            android:textSize="16dp"
+            android:fontFamily="宋体" />
+
+</LinearLayout>
+<LinearLayout 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="身高:"
+            android:textSize="16dp"
+            android:fontFamily="宋体"/>
+
+        <EditText
+            android:id="@+id/heightEdit"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+             android:background="#00000000"
+            android:hint="点击填写身高"
+            android:textSize="16dp"
+            android:fontFamily="宋体" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   "
+            android:textSize="16dp"
+            android:fontFamily="宋体"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="体重:"
+            android:textSize="16dp"
+            android:fontFamily="宋体"/>
+
+        <EditText
+            android:id="@+id/weightEdit"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="#00000000"
+            android:hint="点击填写体重"
+            android:textSize="16dp"
+            android:fontFamily="宋体" />
+
+</LinearLayout>
+<LinearLayout 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昵称:"
+            android:textSize="16dp"
+            android:fontFamily="宋体"/>
+
+        <EditText
+            android:id="@+id/nicknameEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:hint="点击填写昵称"
+            android:textSize="16dp"
+            android:fontFamily="宋体" />
+
+</LinearLayout>
+<LinearLayout 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="喜爱的运动:"
+            android:textSize="16dp"
+            android:fontFamily="宋体"/>
+
+        <EditText
+            android:id="@+id/sportsEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:hint="点击填写喜爱的运动"
+            android:textSize="16dp"
+            android:fontFamily="宋体" />
+
+</LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,1091 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;/******************************************************
+                       ********************//**
+    2 00000000         ; * @file     startup_M051Series.s
+    3 00000000         ; * @version  V2.00
+    4 00000000         ; * $Revision: 2 $
+    5 00000000         ; * $Date: 4/09/12 2:22p $ 
+    6 00000000         ; * @brief    M051 Series Startup Source File
+    7 00000000         ; *
+    8 00000000         ; * @note
+    9 00000000         ; * Copyright (C) 2011 Nuvoton Technology Corp. All righ
+                       ts reserved.
+   10 00000000         ; *
+   11 00000000         ; ******************************************************
+                       ************************/
+   12 00000000         
+   13 00000000         
+   14 00000000         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   15 00000000         
+   16 00000000         
+   17 00000000         
+   18 00000000         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   19 00000000         
+   20 00000000         
+   21 00000000         
+   22 00000000 00000200 
+                       Stack_Size
+                               EQU              0x00000200
+   23 00000000         
+   24 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
+=3
+   25 00000000         Stack_Mem
+                               SPACE            Stack_Size
+   26 00000200         __initial_sp
+   27 00000200         
+   28 00000200         
+   29 00000200         ; <h> Heap Configuration
+   30 00000200         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   31 00000200         ; </h>
+   32 00000200         
+   33 00000200 00000000 
+                       Heap_Size
+                               EQU              0x00000000
+   34 00000200         
+   35 00000200                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
+3
+   36 00000000         __heap_base
+   37 00000000         Heap_Mem
+                               SPACE            Heap_Size
+   38 00000000         __heap_limit
+   39 00000000         
+   40 00000000         
+   41 00000000                 PRESERVE8
+   42 00000000                 THUMB
+   43 00000000         
+   44 00000000         
+   45 00000000         ; Vector Table Mapped to Address 0 at Reset
+   46 00000000                 AREA             RESET, DATA, READONLY
+   47 00000000                 EXPORT           __Vectors
+   48 00000000         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   49 00000000 00000000 
+                       __Vectors
+                               DCD              __initial_sp ; Top of Stack
+   50 00000004 00000000        DCD              Reset_Handler ; Reset Handler
+   51 00000008 00000000        DCD              NMI_Handler ; NMI Handler
+   52 0000000C 00000000        DCD              HardFault_Handler ; Hard Fault 
+                                                            Handler
+   53 00000010 00000000        DCD              0           ; Reserved
+   54 00000014 00000000        DCD              0           ; Reserved
+   55 00000018 00000000        DCD              0           ; Reserved
+   56 0000001C 00000000        DCD              0           ; Reserved
+   57 00000020 00000000        DCD              0           ; Reserved
+   58 00000024 00000000        DCD              0           ; Reserved
+   59 00000028 00000000        DCD              0           ; Reserved
+   60 0000002C 00000000        DCD              SVC_Handler ; SVCall Handler
+   61 00000030 00000000        DCD              0           ; Reserved
+   62 00000034 00000000        DCD              0           ; Reserved
+   63 00000038 00000000        DCD              PendSV_Handler ; PendSV Handler
+                                                            
+   64 0000003C 00000000        DCD              SysTick_Handler 
+                                                            ; SysTick Handler
+   65 00000040         
+   66 00000040         ; External Interrupts
+   67 00000040         ; maximum of 32 External Interrupts are possible
+   68 00000040 00000000        DCD              BOD_IRQHandler
+   69 00000044 00000000        DCD              WDT_IRQHandler
+   70 00000048 00000000        DCD              EINT0_IRQHandler
+   71 0000004C 00000000        DCD              EINT1_IRQHandler
+   72 00000050 00000000        DCD              GPIOP0P1_IRQHandler
+   73 00000054 00000000        DCD              GPIOP2P3P4_IRQHandler
+   74 00000058 00000000        DCD              PWMA_IRQHandler
+   75 0000005C 00000000        DCD              PWMB_IRQHandler
+   76 00000060 00000000        DCD              TMR0_IRQHandler
+   77 00000064 00000000        DCD              TMR1_IRQHandler
+   78 00000068 00000000        DCD              TMR2_IRQHandler
+   79 0000006C 00000000        DCD              TMR3_IRQHandler
+   80 00000070 00000000        DCD              UART0_IRQHandler
+   81 00000074 00000000        DCD              UART1_IRQHandler
+   82 00000078 00000000        DCD              SPI0_IRQHandler
+   83 0000007C 00000000        DCD              SPI1_IRQHandler
+   84 00000080 00000000        DCD              Default_Handler
+   85 00000084 00000000        DCD              Default_Handler
+   86 00000088 00000000        DCD              I2C0_IRQHandler
+   87 0000008C 00000000        DCD              I2C1_IRQHandler
+   88 00000090 00000000        DCD              Default_Handler
+   89 00000094 00000000        DCD              Default_Handler
+   90 00000098 00000000        DCD              Default_Handler
+   91 0000009C 00000000        DCD              Default_Handler
+   92 000000A0 00000000        DCD              Default_Handler
+   93 000000A4 00000000        DCD              ACMP0_IRQHandler
+   94 000000A8 00000000        DCD              ACMP1_IRQHandler
+   95 000000AC 00000000        DCD              Default_Handler
+   96 000000B0 00000000        DCD              PWRWU_IRQHandler
+   97 000000B4 00000000        DCD              ADC_IRQHandler
+   98 000000B8 00000000        DCD              Default_Handler
+   99 000000BC 00000000        DCD              RTC_IRQHandler
+  100 000000C0         
+  101 000000C0         
+  102 000000C0                 AREA             |.text|, CODE, READONLY
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+  103 00000000         
+  104 00000000         
+  105 00000000         
+  106 00000000         ; Reset Handler 
+  107 00000000         
+  108 00000000                 ENTRY
+  109 00000000         
+  110 00000000         Reset_Handler
+                               PROC
+  111 00000000                 EXPORT           Reset_Handler             [WEAK
+]
+  112 00000000                 IMPORT           SystemInit
+  113 00000000                 IMPORT           __main
+  114 00000000         
+  115 00000000 4817            LDR              R0, =0x50000100
+  116 00000002         ; Unlock Register                
+  117 00000002         
+  118 00000002 4918            LDR              R1, =0x59
+  119 00000004 6001            STR              R1, [R0]
+  120 00000006 4918            LDR              R1, =0x16
+  121 00000008 6001            STR              R1, [R0]
+  122 0000000A 4918            LDR              R1, =0x88
+  123 0000000C 6001            STR              R1, [R0]
+  124 0000000E         
+  125 0000000E         ; Init POR
+  126 0000000E 4A18            LDR              R2, =0x50000024
+  127 00000010 4918            LDR              R1, =0x00005AA5
+  128 00000012 6011            STR              R1, [R2]
+  129 00000014         
+  130 00000014         ; Lock register
+  131 00000014 2100            MOVS             R1, #0
+  132 00000016 6001            STR              R1, [R0]
+  133 00000018         
+  134 00000018 4817            LDR              R0, =SystemInit
+  135 0000001A 4780            BLX              R0
+  136 0000001C 4817            LDR              R0, =__main
+  137 0000001E 4700            BX               R0
+  138 00000020                 ENDP
+  139 00000020         
+  140 00000020         
+  141 00000020         
+  142 00000020         ; Dummy Exception Handlers (infinite loops which can be 
+                       modified)                
+  143 00000020         
+  144 00000020         NMI_Handler
+                               PROC
+  145 00000020                 EXPORT           NMI_Handler               [WEAK
+]
+  146 00000020 E7FE            B                .
+  147 00000022                 ENDP
+  149 00000022         HardFault_Handler
+                               PROC
+  150 00000022                 EXPORT           HardFault_Handler         [WEAK
+]
+  151 00000022         
+  152 00000022                 IF               :DEF:DEBUG_ENABLE_SEMIHOST
+  153 00000022         ; Check if the interrupt comes from thread or not
+  154 00000022         ; When enterring interrupt hander
+  155 00000022         ;    if CurrentMode==Mode_Handler then
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  156 00000022         ;        LR = 0xFFFFFFF1; (previous stack: MSP)
+  157 00000022         ;    else
+  158 00000022         ;    if CONTROL<1> == '0' then
+  159 00000022         ;        LR = 0xFFFFFFF9; (previous stack: MSP)
+  160 00000022         ;    else
+  161 00000022         ;        LR = 0xFFFFFFFD; (previous stack: PSP)
+  162 00000022 4670            MOV              R0, LR
+  163 00000024 0740            LSLS             R0, R0, #29 ; Check bit 2
+  164 00000026 D402            BMI              SP_is_PSP   ; previous stack is
+                                                             PSP
+  165 00000028 F3EF 8008       MRS              R0, MSP     ; previous stack is
+                                                             MSP, read MSP
+  166 0000002C E001            B                SP_Read_Ready
+  167 0000002E         SP_is_PSP
+  168 0000002E F3EF 8009       MRS              R0, PSP     ; Read PSP
+  169 00000032         SP_Read_Ready
+  170 00000032 6981            LDR              R1, [R0, #24] ; Get previous PC
+                                                            
+  171 00000034 880B            LDRH             R3, [R1]    ; Get instruction
+  172 00000036 4A12            LDR              R2, =0xBEAB ; The sepcial BKPT 
+                                                            instruction
+  173 00000038 4293            CMP              R3, R2      ; Test if the instr
+                                                            uction at previous 
+                                                            PC is BKPT
+  174 0000003A D102            BNE              HardFault_Handler_Ret 
+                                                            ; Not BKPT
+  175 0000003C         
+  176 0000003C 3104            ADDS             R1, #4      ; Skip BKPT and nex
+                                                            t line
+  177 0000003E 6181            STR              R1, [R0, #24] 
+                                                            ; Save previous PC
+  178 00000040         
+  179 00000040 4770            BX               LR
+  180 00000042         HardFault_Handler_Ret
+  181 00000042                 ENDIF
+  182 00000042         
+  183 00000042 E7FE            B                .
+  184 00000044                 ENDP
+  185 00000044         SVC_Handler
+                               PROC
+  186 00000044                 EXPORT           SVC_Handler               [WEAK
+]
+  187 00000044 E7FE            B                .
+  188 00000046                 ENDP
+  189 00000046         PendSV_Handler
+                               PROC
+  190 00000046                 EXPORT           PendSV_Handler            [WEAK
+]
+  191 00000046 E7FE            B                .
+  192 00000048                 ENDP
+  193 00000048         SysTick_Handler
+                               PROC
+  194 00000048                 EXPORT           SysTick_Handler           [WEAK
+]
+  195 00000048 E7FE            B                .
+  196 0000004A                 ENDP
+  197 0000004A         
+  198 0000004A         Default_Handler
+                               PROC
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+  199 0000004A         
+  200 0000004A                 EXPORT           BOD_IRQHandler            [WEAK
+]
+  201 0000004A                 EXPORT           WDT_IRQHandler            [WEAK
+]
+  202 0000004A                 EXPORT           EINT0_IRQHandler          [WEAK
+]
+  203 0000004A                 EXPORT           EINT1_IRQHandler          [WEAK
+]
+  204 0000004A                 EXPORT           GPIOP0P1_IRQHandler       [WEAK
+]
+  205 0000004A                 EXPORT           GPIOP2P3P4_IRQHandler     [WEAK
+]
+  206 0000004A                 EXPORT           PWMA_IRQHandler           [WEAK
+]
+  207 0000004A                 EXPORT           PWMB_IRQHandler           [WEAK
+]
+  208 0000004A                 EXPORT           TMR0_IRQHandler           [WEAK
+]
+  209 0000004A                 EXPORT           TMR1_IRQHandler           [WEAK
+]
+  210 0000004A                 EXPORT           TMR2_IRQHandler           [WEAK
+]
+  211 0000004A                 EXPORT           TMR3_IRQHandler           [WEAK
+]
+  212 0000004A                 EXPORT           UART0_IRQHandler          [WEAK
+]
+  213 0000004A                 EXPORT           UART1_IRQHandler          [WEAK
+]
+  214 0000004A                 EXPORT           SPI0_IRQHandler           [WEAK
+]
+  215 0000004A                 EXPORT           SPI1_IRQHandler           [WEAK
+]
+  216 0000004A                 EXPORT           I2C0_IRQHandler           [WEAK
+]
+  217 0000004A                 EXPORT           I2C1_IRQHandler           [WEAK
+]
+  218 0000004A                 EXPORT           ACMP0_IRQHandler          [WEAK
+]
+  219 0000004A                 EXPORT           ACMP1_IRQHandler          [WEAK
+]
+  220 0000004A                 EXPORT           PWRWU_IRQHandler          [WEAK
+]
+  221 0000004A                 EXPORT           ADC_IRQHandler            [WEAK
+]
+  222 0000004A                 EXPORT           RTC_IRQHandler            [WEAK
+]
+  223 0000004A         
+  224 0000004A         BOD_IRQHandler
+  225 0000004A         WDT_IRQHandler
+  226 0000004A         EINT0_IRQHandler
+  227 0000004A         EINT1_IRQHandler
+  228 0000004A         GPIOP0P1_IRQHandler
+  229 0000004A         GPIOP2P3P4_IRQHandler
+  230 0000004A         PWMA_IRQHandler
+  231 0000004A         PWMB_IRQHandler
+  232 0000004A         TMR0_IRQHandler
+  233 0000004A         TMR1_IRQHandler
+  234 0000004A         TMR2_IRQHandler
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+  235 0000004A         TMR3_IRQHandler
+  236 0000004A         UART0_IRQHandler
+  237 0000004A         UART1_IRQHandler
+  238 0000004A         SPI0_IRQHandler
+  239 0000004A         SPI1_IRQHandler
+  240 0000004A         I2C0_IRQHandler
+  241 0000004A         I2C1_IRQHandler
+  242 0000004A         ACMP0_IRQHandler
+  243 0000004A         ACMP1_IRQHandler
+  244 0000004A         PWRWU_IRQHandler
+  245 0000004A         ADC_IRQHandler
+  246 0000004A         RTC_IRQHandler
+  247 0000004A E7FE            B                .
+  248 0000004C                 ENDP
+  249 0000004C         
+  250 0000004C         
+  251 0000004C                 ALIGN
+  252 0000004C         
+  253 0000004C         
+  254 0000004C         ; User Initial Stack & Heap
+  255 0000004C         
+  256 0000004C                 IF               :DEF:__MICROLIB
+  257 0000004C         
+  258 0000004C                 EXPORT           __initial_sp
+  259 0000004C                 EXPORT           __heap_base
+  260 0000004C                 EXPORT           __heap_limit
+  261 0000004C         
+  262 0000004C                 ELSE
+  276                          ENDIF
+  277 0000004C         
+  278 0000004C                 IF               :DEF:DEBUG_ENABLE_SEMIHOST
+  279 0000004C         
+  280 0000004C                 ALIGN
+  281 0000004C         
+  282 0000004C         ; int SH_DoCommand(int n32In_R0, int n32In_R1, int *pn32
+                       Out_R0);
+  283 0000004C         ; Input
+  284 0000004C         ;   R0,n32In_R0: semihost register 0
+  285 0000004C         ;   R1,n32In_R1: semihost register 1
+  286 0000004C         ; Output
+  287 0000004C         ;   R2,*pn32Out_R0: semihost register 0
+  288 0000004C         ; Return
+  289 0000004C         ;   0: No ICE debug
+  290 0000004C         ;   1: ICE debug
+  291 0000004C         SH_DoCommand
+                               PROC
+  292 0000004C                 EXPORT           SH_DoCommand
+  293 0000004C BEAB            BKPT             0xAB        ; Wait ICE or HardF
+                                                            ault
+  294 0000004E         ; ICE will step over BKPT directly
+  295 0000004E         ; HardFault will step BKPT and the next line
+  296 0000004E E001            B                SH_ICE
+  297 00000050         SH_HardFault                         ; Captured by HardF
+                                                            ault
+  298 00000050 2000            MOVS             R0, #0      ; Set return value 
+                                                            to 0
+  299 00000052 4770            BX               lr          ; Return
+  300 00000054         SH_ICE                               ; Captured by ICE
+  301 00000054         ; Save return value
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+  302 00000054 2A00            CMP              R2, #0
+  303 00000056 D000            BEQ              SH_End
+  304 00000058 6010            STR              R0, [R2]    ; Save the return v
+                                                            alue to *pn32Out_R0
+                                                            
+  305 0000005A         SH_End
+  306 0000005A 2001            MOVS             R0, #1      ; Set return value 
+                                                            to 1
+  307 0000005C 4770            BX               lr          ; Return
+  308 0000005E         
+  309 0000005E 00 00           ALIGN
+  310 00000060                 ENDP
+  311 00000060                 ENDIF
+  312 00000060         
+  313 00000060         
+  314 00000060                 END
+              50000100 
+              00000059 
+              00000016 
+              00000088 
+              50000024 
+              00005AA5 
+              00000000 
+              00000000 
+              0000BEAB 
+Command Line: --16 --debug --xref --cpu=Cortex-M0 --apcs=interwork --depend=.\o
+bj\startup_M051Series.d -o.\obj\startup_M051Series.o -IC:\Keil\ARM\RV31\Inc -IC
+:\Keil\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SE
+TA 1" --predefine="DEBUG_ENABLE_SEMIHOST SETA 1" --list=.\lst\startup_M051Serie
+s.lst ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvoton\M051Series\star
+tup\arm\startup_M051Series.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+STACK 00000000
+
+Symbol: STACK
+   Definitions
+      At line 24 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      None
+Comment: STACK unused
+Stack_Mem 00000000
+
+Symbol: Stack_Mem
+   Definitions
+      At line 25 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      None
+Comment: Stack_Mem unused
+__initial_sp 00000200
+
+Symbol: __initial_sp
+   Definitions
+      At line 26 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 49 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 258 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+HEAP 00000000
+
+Symbol: HEAP
+   Definitions
+      At line 35 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      None
+Comment: HEAP unused
+Heap_Mem 00000000
+
+Symbol: Heap_Mem
+   Definitions
+      At line 37 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      None
+Comment: Heap_Mem unused
+__heap_base 00000000
+
+Symbol: __heap_base
+   Definitions
+      At line 36 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 259 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: __heap_base used once
+__heap_limit 00000000
+
+Symbol: __heap_limit
+   Definitions
+      At line 38 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 260 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: __heap_limit used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 46 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 49 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 47 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 102 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      None
+Comment: .text unused
+ACMP0_IRQHandler 0000004A
+
+Symbol: ACMP0_IRQHandler
+   Definitions
+      At line 242 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 93 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 218 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+ACMP1_IRQHandler 0000004A
+
+Symbol: ACMP1_IRQHandler
+   Definitions
+      At line 243 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 94 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 219 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+ADC_IRQHandler 0000004A
+
+Symbol: ADC_IRQHandler
+   Definitions
+      At line 245 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 97 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 221 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+BOD_IRQHandler 0000004A
+
+Symbol: BOD_IRQHandler
+   Definitions
+      At line 224 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 68 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 200 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+Default_Handler 0000004A
+
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: Default_Handler
+   Definitions
+      At line 198 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 84 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 85 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 88 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 89 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 90 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 91 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 92 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 95 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 98 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+
+EINT0_IRQHandler 0000004A
+
+Symbol: EINT0_IRQHandler
+   Definitions
+      At line 226 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 70 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 202 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+EINT1_IRQHandler 0000004A
+
+Symbol: EINT1_IRQHandler
+   Definitions
+      At line 227 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 71 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 203 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+GPIOP0P1_IRQHandler 0000004A
+
+Symbol: GPIOP0P1_IRQHandler
+   Definitions
+      At line 228 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 72 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 204 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Relocatable symbols
+
+
+GPIOP2P3P4_IRQHandler 0000004A
+
+Symbol: GPIOP2P3P4_IRQHandler
+   Definitions
+      At line 229 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 73 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 205 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+HardFault_Handler 00000022
+
+Symbol: HardFault_Handler
+   Definitions
+      At line 149 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 52 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 150 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+HardFault_Handler_Ret 00000042
+
+Symbol: HardFault_Handler_Ret
+   Definitions
+      At line 180 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 174 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: HardFault_Handler_Ret used once
+I2C0_IRQHandler 0000004A
+
+Symbol: I2C0_IRQHandler
+   Definitions
+      At line 240 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 86 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 216 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+I2C1_IRQHandler 0000004A
+
+Symbol: I2C1_IRQHandler
+   Definitions
+      At line 241 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 87 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 217 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+
+
+
+ARM Macro Assembler    Page 4 Alphabetic symbol ordering
+Relocatable symbols
+
+NMI_Handler 00000020
+
+Symbol: NMI_Handler
+   Definitions
+      At line 144 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 51 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 145 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+PWMA_IRQHandler 0000004A
+
+Symbol: PWMA_IRQHandler
+   Definitions
+      At line 230 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 74 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 206 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+PWMB_IRQHandler 0000004A
+
+Symbol: PWMB_IRQHandler
+   Definitions
+      At line 231 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 75 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 207 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+PWRWU_IRQHandler 0000004A
+
+Symbol: PWRWU_IRQHandler
+   Definitions
+      At line 244 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 96 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 220 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+PendSV_Handler 00000046
+
+Symbol: PendSV_Handler
+   Definitions
+      At line 189 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 63 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 190 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+
+
+ARM Macro Assembler    Page 5 Alphabetic symbol ordering
+Relocatable symbols
+
+
+RTC_IRQHandler 0000004A
+
+Symbol: RTC_IRQHandler
+   Definitions
+      At line 246 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 99 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 222 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 110 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 50 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 111 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+SH_DoCommand 0000004C
+
+Symbol: SH_DoCommand
+   Definitions
+      At line 291 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 292 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: SH_DoCommand used once
+SH_End 0000005A
+
+Symbol: SH_End
+   Definitions
+      At line 305 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 303 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: SH_End used once
+SH_HardFault 00000050
+
+Symbol: SH_HardFault
+   Definitions
+      At line 297 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      None
+Comment: SH_HardFault unused
+SH_ICE 00000054
+
+Symbol: SH_ICE
+   Definitions
+      At line 300 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+
+
+
+ARM Macro Assembler    Page 6 Alphabetic symbol ordering
+Relocatable symbols
+
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 296 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: SH_ICE used once
+SPI0_IRQHandler 0000004A
+
+Symbol: SPI0_IRQHandler
+   Definitions
+      At line 238 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 82 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 214 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+SPI1_IRQHandler 0000004A
+
+Symbol: SPI1_IRQHandler
+   Definitions
+      At line 239 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 83 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 215 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+SP_Read_Ready 00000032
+
+Symbol: SP_Read_Ready
+   Definitions
+      At line 169 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 166 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: SP_Read_Ready used once
+SP_is_PSP 0000002E
+
+Symbol: SP_is_PSP
+   Definitions
+      At line 167 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 164 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: SP_is_PSP used once
+SVC_Handler 00000044
+
+Symbol: SVC_Handler
+   Definitions
+      At line 185 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 60 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 186 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+
+
+
+ARM Macro Assembler    Page 7 Alphabetic symbol ordering
+Relocatable symbols
+
+oton\M051Series\startup\arm\startup_M051Series.s
+
+SysTick_Handler 00000048
+
+Symbol: SysTick_Handler
+   Definitions
+      At line 193 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 64 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 194 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+TMR0_IRQHandler 0000004A
+
+Symbol: TMR0_IRQHandler
+   Definitions
+      At line 232 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 76 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 208 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+TMR1_IRQHandler 0000004A
+
+Symbol: TMR1_IRQHandler
+   Definitions
+      At line 233 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 77 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 209 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+TMR2_IRQHandler 0000004A
+
+Symbol: TMR2_IRQHandler
+   Definitions
+      At line 234 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 78 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 210 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+TMR3_IRQHandler 0000004A
+
+Symbol: TMR3_IRQHandler
+   Definitions
+      At line 235 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 79 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+
+
+
+ARM Macro Assembler    Page 8 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 211 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+UART0_IRQHandler 0000004A
+
+Symbol: UART0_IRQHandler
+   Definitions
+      At line 236 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 80 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 212 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+UART1_IRQHandler 0000004A
+
+Symbol: UART1_IRQHandler
+   Definitions
+      At line 237 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 81 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 213 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+WDT_IRQHandler 0000004A
+
+Symbol: WDT_IRQHandler
+   Definitions
+      At line 225 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 69 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+      At line 201 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+
+38 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+Heap_Size 00000000
+
+Symbol: Heap_Size
+   Definitions
+      At line 33 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 37 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+Comment: Heap_Size used once
+Stack_Size 00000200
+
+Symbol: Stack_Size
+   Definitions
+      At line 22 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 25 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuvo
+ton\M051Series\startup\arm\startup_M051Series.s
+Comment: Stack_Size used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+SystemInit 00000000
+
+Symbol: SystemInit
+   Definitions
+      At line 112 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 134 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: SystemInit used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 113 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+   Uses
+      At line 136 in file ..\..\..\..\LibM051Series\CMSIS\CM0\DeviceSupport\Nuv
+oton\M051Series\startup\arm\startup_M051Series.s
+Comment: __main used once
+2 symbols
+386 symbols in table

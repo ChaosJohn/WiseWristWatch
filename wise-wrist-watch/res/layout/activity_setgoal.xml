@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:orientation="horizontal"
+    android:layout_weight="1.5"
+    android:gravity="right">
+
+    <TextView
+        android:id="@+id/save_run"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="黑体"
+        android:text="保存"
+        android:textColor="#CC24B2E5"
+        android:textSize="17dp" />
+
+    </LinearLayout>
+        
+    <LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:orientation="horizontal"
+    android:layout_weight="6"
+    android:gravity="center">
+
+    <TextView 
+        android:id="@+id/headtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="19dp"
+        android:text="坚持跑步"/>
+    <net.simonvt.numberpicker.NumberPicker
+        android:id="@+id/numberPicker1" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp" />
+    <TextView 
+        android:id="@+id/pointtext"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="19dp"/>
+    <net.simonvt.numberpicker.NumberPicker
+        android:id="@+id/numberPicker2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp" />
+    <net.simonvt.numberpicker.NumberPicker
+        android:id="@+id/numberPicker3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView 
+        android:id="@+id/tailtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="19dp"
+        android:text="分钟"/>
+    </LinearLayout>
+    <LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="4">
+        
+    </LinearLayout>
+
+</LinearLayout>
